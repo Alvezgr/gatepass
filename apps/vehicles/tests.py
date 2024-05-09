@@ -93,6 +93,7 @@ class VehicleTests(APITestCase):
             insurer="libre seguros",
             insurance_expiration="2025-03-02"
         )
+        self.user = User.objects.create(username='gera', email='gera@gatepass.com.ar')
 
     def test_fail_unathorized_user_create_vehicle(self):
         """
@@ -131,7 +132,7 @@ class VehicleTests(APITestCase):
 
     def test_fail_create_vehicle_created(self):
         """
-        Ensure an already created with a licence plate vehicle can't be created again.
+        Ensure an already created with a license plate vehicle can't be created again.
         """
         url = reverse('vehicles:vehicles-list')
 
@@ -148,7 +149,7 @@ class VehicleTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            response.data['licence_plate'][0],
+            response.data['license_plate'][0],
             'Esta patente ya existe para un vehiculo.'
         )
 
@@ -170,19 +171,19 @@ class VehicleTests(APITestCase):
         self.client.force_authenticate(user=self.user)
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['licence_plate'], data['license_plate'])
+        self.assertEqual(response.data['license_plate'], data['license_plate'])
 
     def test_update_vehicle(self):
         """
         Ensure we can update a vehicle.
         """
-        url = reverse('vehicles:vehicles-update', kwargs={'pk': self.vehicle.pk})
+        url = reverse('vehicles:vehicles-detail', kwargs={'pk': self.vehicle.pk})
 
         data = {
             "insurance_expiration": "2026-03-02"
         }
 
         self.client.force_authenticate(user=self.user)
-        response = self.client.post(url, data, format='json')
+        response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['insurance_expiration'], data['insurance_expiration'])
