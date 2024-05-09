@@ -50,7 +50,11 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
  
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    'drf_yasg',
+    'django_filters',
+]
+
 LOCAL_APPS = [
     'apps.users.apps.UsersConfig',
     'apps.vehicles.apps.VehiclesConfig',
@@ -163,3 +167,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
 APPEND_SLASH = True
+
+# DOCS SWAGGER_SETTINGS
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'JWT': {
+            'type': 'http',
+            'scheme': 'bearer',
+            'bearerFormat': 'JWT token'
+        }
+    },
+}
