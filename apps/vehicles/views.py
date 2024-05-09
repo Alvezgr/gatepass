@@ -12,7 +12,7 @@ from apps.vehicles.models import VehicleKind, Vehicle
 
 class VehicleKindViewset(viewsets.ModelViewSet):
     """
-    A view set to retrieve and modify kind of vehicles.
+    API endopoint for managing vehicle kinds.
     """
 
     filterset_fields = "__all__"
@@ -22,7 +22,7 @@ class VehicleKindViewset(viewsets.ModelViewSet):
 
 class VehiclesViewset(viewsets.ModelViewSet):
     """
-    A view set to retrieve create, and modify vehicles.
+    API endopoint for managing vehicles.
     """
 
     filterset_fields = "__all__"
