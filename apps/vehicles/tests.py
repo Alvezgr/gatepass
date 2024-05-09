@@ -187,3 +187,26 @@ class VehicleTests(APITestCase):
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['insurance_expiration'], data['insurance_expiration'])
+
+    def test_summarize_vehicles(self):
+        """
+        Ensure we can sumarize vehicles by an attribute.
+        """
+        Vehicle.objects.create(
+            kind=self.vehicle_kind,
+            brand="ford",
+            color="brown",
+            license_plate="ARR 8239L",
+            insurer="libre seguros",
+            insurance_expiration="2025-03-02"
+        )
+        url = reverse('vehicles:vehicles-sumarize')
+
+        data = {
+            "color": "brown"
+        }
+
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["count"], 2)
