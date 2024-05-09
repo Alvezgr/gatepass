@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 # Models
-from apps.vehicles.models import VehicleKind
+from apps.vehicles.models import VehicleKind, Vehicle
 from apps.users.models import User
 
 
@@ -23,7 +23,7 @@ class VehiclesKindTests(APITestCase):
 
     def test_fail_unathorized_user_create_vehicle_kind(self):
         """
-        Ensure  can create a vehicle kind.
+        Ensure can create a vehicle kind.
         """
         url = reverse('vehicles:vehicles-kind-list')
         data = {
@@ -49,7 +49,7 @@ class VehiclesKindTests(APITestCase):
 
     def test_fail_create_vehicle_camion(self):
         """
-        Ensure an already exist vehicle kind can't be created again.
+        Ensure an already created vehicle kind can't be created again.
         """
         url = reverse('vehicles:vehicles-kind-list')
         data = {
@@ -78,3 +78,111 @@ class VehiclesKindTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['name'], data['name'])
 
+
+class VehicleTests(APITestCase):
+    """Test cases for vehicle"""
+
+    def setUp(self):
+        """Default setting for testing vehicles."""
+        self.vehicle_kind = VehicleKind.objects.create(name="auto")
+        self.vehicle = Vehicle.objects.create(
+            kind=self.vehicle_kind,
+            brand="chevi",
+            color="brown",
+            license_plate="ARD 1233B",
+            insurer="libre seguros",
+            insurance_expiration="2025-03-02"
+        )
+
+    def test_fail_unathorized_user_create_vehicle(self):
+        """
+        Ensure an unauthorized user can't create a vehicle.
+        """
+        url = reverse('vehicles:vehicles-list')
+        data = {
+            "kind": self.vehicle_kind.pk,
+            "brand": "ford",
+            "color": "redblue",
+            "license_plate": "ADB 1334A",
+            "insurer": "libre seguros",
+            "insurance_expiration": "2025-03-02"
+        }
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_fail_create_vehicle_without_kind(self):
+        """
+        Ensure we must provide a kind to create a vehicle.
+        """
+        url = reverse('vehicles:vehicles-list')
+        data = {
+            "brand": "ford",
+            "color": "redblue",
+            "license_plate": "ADB 1334A",
+            "insurer": "libre seguros",
+            "insurance_expiration": "2025-03-02"
+        }
+
+        self.client.force_authenticate(user=self.user)
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['kind'][0], 'This field is required.')
+
+    def test_fail_create_vehicle_created(self):
+        """
+        Ensure an already created with a licence plate vehicle can't be created again.
+        """
+        url = reverse('vehicles:vehicles-list')
+
+        data = {
+            "kind": self.vehicle_kind.pk,
+            "brand": "chevi",
+            "color": "brown",
+            "license_plate": "ARD 1233B",
+            "insurer": "libre seguros",
+            "insurance_expiration": "2025-03-02"
+        }
+
+        self.client.force_authenticate(user=self.user)
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.data['licence_plate'][0],
+            'Esta patente ya existe para un vehiculo.'
+        )
+
+    def test_create_vehicle(self):
+        """
+        Ensure we can create a vehicle.
+        """
+        url = reverse('vehicles:vehicles-list')
+
+        data = {
+            "kind": self.vehicle_kind.pk,
+            "brand": "grand",
+            "color": "red",
+            "license_plate": "ARF 1233B",
+            "insurer": "libre seguros",
+            "insurance_expiration": "2025-03-02"
+        }
+
+        self.client.force_authenticate(user=self.user)
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data['licence_plate'], data['license_plate'])
+
+    def test_update_vehicle(self):
+        """
+        Ensure we can update a vehicle.
+        """
+        url = reverse('vehicles:vehicles-update', kwargs={'pk': self.vehicle.pk})
+
+        data = {
+            "insurance_expiration": "2026-03-02"
+        }
+
+        self.client.force_authenticate(user=self.user)
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['insurance_expiration'], data['insurance_expiration'])

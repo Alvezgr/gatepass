@@ -16,7 +16,7 @@ class Vehicle(models.Model):
     )
     brand = models.CharField(help_text='La marca del vehiculo', max_length=255)
     color = models.CharField(help_text='El color del vehiculo', max_length=255)
-    licence_plate = models.CharField(help_text='La patente del vehiculo', max_length=15)
+    license_plate = models.CharField(help_text='La patente del vehiculo', max_length=15)
     insurer = models.CharField(help_text='El nombre de la aseguradora')
     insurance_expiration = models.DateField(
         help_text='Fecha de vencimiento de la poliza de seguros en el formato DD/MM/YYYY'

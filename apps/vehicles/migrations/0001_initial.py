@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
                     models.CharField(help_text="El color del vehiculo", max_length=255),
                 ),
                 (
-                    "licence_plate",
+                    "license_plate",
                     models.CharField(
                         help_text="La patente del vehiculo", max_length=15
                     ),
