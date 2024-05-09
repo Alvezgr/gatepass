@@ -27,6 +27,12 @@ class UserTest(APITestCase):
             email="gera2@gatepass.com.ar",
             is_verified=False
         )
+        self.signup_user = User.objects.create(
+            username='gera_logged', email='gera_logged@gatepass.com.ar'
+        )
+        self.signup_user.set_password("salto en largo")
+        self.signup_user.save()
+
 
     def test_signup(self):
         """Ensures an user can signup."""
@@ -95,3 +101,28 @@ class UserTest(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.data['non_field_errors'][0], 'Credenciales invalidas')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_fail_list_users(self):
+        """Ensures that an anonymous user can't list users."""
+        url = reverse('users:users-list')
+        response = self.client.get(url, format='json')
+        self.assertEqual(
+            response.data['detail'],
+            'Authentication credentials were not provided.'
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_list_users(self):
+        """Ensures that we can list users."""
+        url = reverse('users:users-list')
+        self.client.force_authenticate(user=self.signup_user)
+        response = self.client.get(url, format='json')
+        self.assertEqual(
+            response.data['results'][0]['username'],
+            'gera_logged'
+        )
+        self.assertEqual(
+            response.data['results'][0]['email'],
+            'gera_logged@gatepass.com.ar'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
