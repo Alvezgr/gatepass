@@ -15,6 +15,7 @@ class Vehicle(models.Model):
         on_delete=models.DO_NOTHING
     )
     brand = models.CharField(help_text='La marca del vehiculo', max_length=255)
+    model = models.CharField(help_text='El modelo del vehiculo', max_length=255)
     color = models.CharField(help_text='El color del vehiculo', max_length=255)
     license_plate = models.CharField(help_text='La patente del vehiculo', max_length=15)
     insurer = models.CharField(help_text='El nombre de la aseguradora')

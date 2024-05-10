@@ -89,6 +89,7 @@ class VehicleTests(APITestCase):
             kind=self.vehicle_kind,
             brand="chevi",
             color="brown",
+            model="2012",
             license_plate="ARD 1233B",
             insurer="libre seguros",
             insurance_expiration="2025-03-02"
@@ -103,6 +104,7 @@ class VehicleTests(APITestCase):
         data = {
             "kind": self.vehicle_kind.pk,
             "brand": "ford",
+            "model": "2012",
             "color": "redblue",
             "license_plate": "ADB 1334A",
             "insurer": "libre seguros",
@@ -120,6 +122,7 @@ class VehicleTests(APITestCase):
         data = {
             "brand": "ford",
             "color": "redblue",
+            "model": "2012",
             "license_plate": "ADB 1334A",
             "insurer": "libre seguros",
             "insurance_expiration": "2025-03-02"
@@ -140,6 +143,7 @@ class VehicleTests(APITestCase):
             "kind": self.vehicle_kind.pk,
             "brand": "chevi",
             "color": "brown",
+            "model": "2012",
             "license_plate": "ARD 1233B",
             "insurer": "libre seguros",
             "insurance_expiration": "2025-03-02"
@@ -162,6 +166,7 @@ class VehicleTests(APITestCase):
         data = {
             "kind": self.vehicle_kind.pk,
             "brand": "grand",
+            "model": "2012",
             "color": "red",
             "license_plate": "ARF 1233B",
             "insurer": "libre seguros",
@@ -195,6 +200,7 @@ class VehicleTests(APITestCase):
         Vehicle.objects.create(
             kind=self.vehicle_kind,
             brand="ford",
+            model="2012",
             color="brown",
             license_plate="ARR 8239L",
             insurer="libre seguros",
