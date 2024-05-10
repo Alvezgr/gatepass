@@ -21,10 +21,9 @@ def gen_verification_token(user: User) -> str:
     """Generate a JWT token that the user can use to verify its account."""
     exp_date = timezone.now() + timedelta(days=3)
     payload = {
-        'user': user.username,
-        'exp': int(exp_date.timestamp()),
-        'type': 'email_confirmation',
+        "user": user.username,
+        "exp": int(exp_date.timestamp()),
+        "type": "email_confirmation",
     }
-    token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+    token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
     return token
-

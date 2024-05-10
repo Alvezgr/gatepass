@@ -23,11 +23,10 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title="Gate pass API",
-        default_version='v1',
+        default_version="v1",
         description=f"API Documentation of gatepass.",
         terms_of_service="https://www.gatepass.com.ar/policies/terms/",
         contact=openapi.Contact(email="contact@gatepass.com.ar"),
@@ -38,7 +37,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('api/v1/', include(('apps.users.urls', 'users'), namespace='users')),
-    path('api/v1/', include(('apps.vehicles.urls', 'vehicles'), namespace='vehicles')),
-    path('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='openapiurl'),
+    path("api/v1/", include(("apps.users.urls", "users"), namespace="users")),
+    path("api/v1/", include(("apps.vehicles.urls", "vehicles"), namespace="vehicles")),
+    path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="openapiurl"),
 ]

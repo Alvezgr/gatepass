@@ -14,7 +14,11 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 # Serializers imports
-from apps.vehicles.serializers import QuerySummarizerSerializer, VehicleKindSerializer, VehiclesSerializer
+from apps.vehicles.serializers import (
+    QuerySummarizerSerializer,
+    VehicleKindSerializer,
+    VehiclesSerializer,
+)
 
 # models imports
 from apps.vehicles.models import VehicleKind, Vehicle
@@ -49,9 +53,9 @@ class VehiclesViewset(viewsets.ModelViewSet):
                         "color": "brown",
                         "count": "40012",
                     }
-                }
+                },
             ),
-        }
+        },
     )
     @action(detail=False, methods=["get"], filter_backends=None, pagination_class=None)
     def summarizer(self, request):
@@ -63,8 +67,8 @@ class VehiclesViewset(viewsets.ModelViewSet):
         serializer = QuerySummarizerSerializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
 
-        sumarized = Vehicle.objects.values(
-            'color'
-        ).annotate(count=Count('color')).order_by()
+        sumarized = (
+            Vehicle.objects.values("color").annotate(count=Count("color")).order_by()
+        )
 
         return Response(sumarized, status=status.HTTP_200_OK)

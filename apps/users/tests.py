@@ -1,6 +1,6 @@
 """Testing module for users app"""
 
-# utils imports 
+# utils imports
 from apps.utils.helpers import gen_verification_token
 
 # Django REST Framework

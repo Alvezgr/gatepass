@@ -12,20 +12,20 @@ class Vehicle(models.Model):
     kind = models.ForeignKey(
         "VehicleKind",
         help_text="El tipo de vehiculo (auto, velero, bicicleta)",
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
     )
-    brand = models.CharField(help_text='La marca del vehiculo', max_length=255)
-    model = models.CharField(help_text='El modelo del vehiculo', max_length=255)
-    color = models.CharField(help_text='El color del vehiculo', max_length=255)
-    license_plate = models.CharField(help_text='La patente del vehiculo', max_length=15)
-    insurer = models.CharField(help_text='El nombre de la aseguradora')
+    brand = models.CharField(help_text="La marca del vehiculo", max_length=255)
+    model = models.CharField(help_text="El modelo del vehiculo", max_length=255)
+    color = models.CharField(help_text="El color del vehiculo", max_length=255)
+    license_plate = models.CharField(help_text="La patente del vehiculo", max_length=15)
+    insurer = models.CharField(help_text="El nombre de la aseguradora")
     insurance_expiration = models.DateField(
-        help_text='Fecha de vencimiento de la poliza de seguros en el formato DD/MM/YYYY'
+        help_text="Fecha de vencimiento de la poliza de seguros en el formato DD/MM/YYYY"
     )
 
     def __str__(self):
         """str representation of a vehicle"""
-        return f'{self.kind}: {self.color} Patente: {self.license_plate}'
+        return f"{self.kind}: {self.color} Patente: {self.license_plate}"
 
 
 class VehicleKind(models.Model):
@@ -35,7 +35,7 @@ class VehicleKind(models.Model):
 
     name = models.CharField(
         help_text="El nombre del tipo de vehiculo si es auto, velero, bicicleta... etc",
-        max_length=20
+        max_length=20,
     )
 
     def __str__(self):

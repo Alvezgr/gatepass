@@ -15,25 +15,23 @@ class User(GPBaseModel, AbstractUser):
     """
 
     email = models.EmailField(
-        'email address',
+        "email address",
         unique=True,
-        error_messages={
-            'unique': 'A user with that email already exists.'
-        }
+        error_messages={"unique": "A user with that email already exists."},
     )
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     is_verified = models.BooleanField(
-        'verified',
+        "verified",
         default=True,
-        help_text='Set to true when the user have verified its email address.'
+        help_text="Set to true when the user have verified its email address.",
     )
 
     def __str__(self):
         """Return a str representation of User."""
-        return f'User: {self.username}'
+        return f"User: {self.username}"
 
     def get_short_name(self):
         """Return username."""

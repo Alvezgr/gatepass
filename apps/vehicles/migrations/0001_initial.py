@@ -50,7 +50,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "model",
-                    models.CharField(help_text="El modelo del vehiculo", max_length=255),
+                    models.CharField(
+                        help_text="El modelo del vehiculo", max_length=255
+                    ),
                 ),
                 (
                     "color",
