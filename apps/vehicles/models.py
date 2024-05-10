@@ -24,7 +24,7 @@ class Vehicle(models.Model):
 
     def __str__(self):
         """str representation of a vehicle"""
-        return f'{self.kind}: {self.color} Patente: {self.licence_plate}'
+        return f'{self.kind}: {self.color} Patente: {self.license_plate}'
 
 
 class VehicleKind(models.Model):
