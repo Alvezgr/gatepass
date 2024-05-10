@@ -6,6 +6,7 @@ Esta es una aplicación diseñada para gestionar los distintos vehículos que in
 
 - Registro de diferentes tipos de vehículos, a travez del model `VehicleKind` como autos, motocicletas, bicicletas, camionetas, yates, veleros, etc.
 - Los datos requeridos para cada vehículo a travez del model `Vehicle` incluyen tipo, marca, modelo, color, patente, nombre de la aseguradora y fecha de vencimiento de la póliza del seguro.
+- Permite sumarizar los vehiculos por algun atributo como ser: Color, modelo, marca, etc...
 
 ## Endpoints
 
@@ -28,10 +29,18 @@ Esta es una aplicación diseñada para gestionar los distintos vehículos que in
 **Vehículos**
 
 - **GET /vehicles**: Obtiene la lista de todos los vehículos registrados.
+
 - **GET /vehicles/{id}**: Obtiene los detalles de un vehículo específico según su ID.
+
+- **GET /vehicles/summarize**: Permite contar vehículos por un determinado atributo.
+
 - **POST /vehicles**: Crea un nuevo vehículo con la información proporcionada en el cuerpo de la solicitud.
+
 - **PUT /vehicles/{id}**: Actualiza la información de un vehículo existente identificado por su ID.
+
 - **DELETE /vehicles/{id}**: Elimina un vehículo de la base de datos según su ID.
+
+  
 
 ## Formato de Datos
 
