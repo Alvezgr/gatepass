@@ -66,9 +66,11 @@ class VehiclesViewset(viewsets.ModelViewSet):
         """
         serializer = QuerySummarizerSerializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
-
+        
         sumarized = (
-            Vehicle.objects.values("color").annotate(count=Count("color")).order_by()
+            Vehicle.objects.values(
+                serializer.data['field_name']
+            ).annotate(count=Count(serializer.data['field_name'])).order_by()
         )
 
         return Response(sumarized, status=status.HTTP_200_OK)
