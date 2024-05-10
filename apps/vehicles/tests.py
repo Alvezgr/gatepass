@@ -200,13 +200,11 @@ class VehicleTests(APITestCase):
             insurer="libre seguros",
             insurance_expiration="2025-03-02"
         )
-        url = reverse('vehicles:vehicles-sumarize')
+        path = reverse('vehicles:vehicles-summarizer')
 
-        data = {
-            "color": "brown"
-        }
+        url = path + '?field_name=color'
 
         self.client.force_authenticate(user=self.user)
-        response = self.client.get(url, data, format='json')
+        response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["count"], 2)
+        self.assertEqual(response.data[0]["count"], 2)
