@@ -1,11 +1,13 @@
 # GatePass API
 
-Esta es una aplicación diseñada para gestionar los distintos vehículos que ingresan o egresan de una urbanización privada. Proporciona una API REST que permite realizar operaciones CRUD (crear, leer, actualizar, eliminar) sobre los vehículos registrados.
+Esta es una aplicación diseñada para gestionar vecindarios, puertas de accesos y vehículos que ingresan o egresan de una urbanización privada. 
+Proporciona una API REST que permite realizar operaciones CRUD (crear, leer, actualizar, eliminar) sobre los vehículos registrados, vecindarios y puertas de acceso de vecindarios.
 
 ## Características
 
-- Registro de diferentes tipos de vehículos, a travez del model `VehicleKind` como autos, motocicletas, bicicletas, camionetas, yates, veleros, etc.
-- Los datos requeridos para cada vehículo a travez del model `Vehicle` incluyen tipo, marca, modelo, color, patente, nombre de la aseguradora y fecha de vencimiento de la póliza del seguro.
+- Registro de urbanizaciones privadas a través del model `Neighborhood`y puertas de accesos a través del model `Gates`
+- Registro de diferentes tipos de vehículos, a través del model `VehicleKind` como autos, motocicletas, bicicletas, camionetas, yates, veleros, etc.
+- Los datos requeridos para cada vehículo a través del model `Vehicle` incluyen tipo, marca, modelo, color, patente, nombre de la aseguradora y fecha de vencimiento de la póliza del seguro.
 - Permite sumarizar los vehiculos por algun atributo como ser: Color, modelo, marca, etc...
 
 ## Endpoints
@@ -24,7 +26,31 @@ Esta es una aplicación diseñada para gestionar los distintos vehículos que in
 
 - **DELETE /users/{id}**: Elimina un usuario de la base de datos según su ID.
 
-  
+
+**Vecindarios**
+
+- **GET /neighborhoods**: Obtiene la lista de todos los vecindarios registrados.
+
+- **GET /neighborhoods/{id}**: Obtiene los detalles de un vehículo específico según su ID.
+
+- **POST /neighborhoods**: Crea un nuevo vehículo con la información proporcionada en el cuerpo de la solicitud.
+
+- **PUT /neighborhoods/{id}**: Actualiza la información de un vehículo existente identificado por su ID.
+
+- **DELETE /neighborhoods/{id}**: Elimina un vehículo de la base de datos según su ID.
+
+
+**Puertas de accesos**
+
+- **GET /gates**: Obtiene la lista de todos las puertas de accesos.
+
+- **GET /gates/{id}**: Obtiene los detalles de un puertas de acceso específico según su ID.
+
+- **POST /gates**: Crea un nuevo puertas de acceso con la información proporcionada en el cuerpo de la solicitud.
+
+- **PUT /gates/{id}**: Actualiza la información de un puertas de acceso existente identificado por su ID.
+
+- **DELETE /gates/{id}**: Elimina un puertas de acceso de la base de datos según su ID.
 
 **Vehículos**
 
@@ -77,7 +103,7 @@ Todos los datos se manejan en formato JSON tanto en las solicitudes como en las 
 4. Crea un archivo .env y proporciana datos como el ejemplo
 
    ```
-   DATABASE_URL=psql://alvezgr:testime12@127.0.0.1:5432/gatepass
+   DATABASE_URL=psql://{{user}}:{{db_user}}@127.0.0.1:5432/{{db_name}}
    SECRET_KEY=django-insecure-k_a(cr5848&ta$e9r&k4nev8xz=76twr=@iraw8(_6kqnsls6k
    DEBUG=True
    ```
