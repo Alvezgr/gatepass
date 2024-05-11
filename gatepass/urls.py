@@ -39,5 +39,6 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("api/v1/", include(("apps.users.urls", "users"), namespace="users")),
     path("api/v1/", include(("apps.vehicles.urls", "vehicles"), namespace="vehicles")),
+    path("api/v1/", include(("apps.neighborhood.urls", "neighborhoods"), namespace="neighborhoods")),
     path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="openapiurl"),
 ]
