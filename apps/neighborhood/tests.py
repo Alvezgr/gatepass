@@ -156,7 +156,7 @@ class GatesTests(APITestCase):
         self.client.force_authenticate(user=self.user)
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["name"][0], "This field is required.")
+        self.assertEqual(response.data["neighborhood"][0], "This field is required.")
 
     def test_fail_create_gate(self):
         """
