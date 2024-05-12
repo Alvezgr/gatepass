@@ -3,6 +3,9 @@
 # Django imports
 from django.db import models
 
+# Local imports
+from apps.vehicles.manager import VehicleManager
+
 
 class Vehicle(models.Model):
     """
@@ -22,6 +25,7 @@ class Vehicle(models.Model):
     insurance_expiration = models.DateField(
         help_text="Fecha de vencimiento de la poliza de seguros en el formato DD/MM/YYYY"
     )
+    objects = VehicleManager()
 
     def __str__(self):
         """str representation of a vehicle"""

@@ -1,8 +1,5 @@
 """Main module for vehicles view."""
 
-# django imports
-from django.db.models import Count
-
 # DRF imports
 from rest_framework import status
 from rest_framework.response import Response
@@ -67,10 +64,5 @@ class VehiclesViewset(viewsets.ModelViewSet):
         serializer = QuerySummarizerSerializer(data=request.GET)
         serializer.is_valid(raise_exception=True)
         
-        sumarized = (
-            Vehicle.objects.values(
-                serializer.data['field_name']
-            ).annotate(count=Count(serializer.data['field_name'])).order_by()
-        )
-
+        sumarized = Vehicle.objects.aggregate_by(serializer.data['field_name'])
         return Response(sumarized, status=status.HTTP_200_OK)
