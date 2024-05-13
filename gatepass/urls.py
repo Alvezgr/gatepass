@@ -40,5 +40,6 @@ urlpatterns = [
     path("api/v1/", include(("apps.users.urls", "users"), namespace="users")),
     path("api/v1/", include(("apps.vehicles.urls", "vehicles"), namespace="vehicles")),
     path("api/v1/", include(("apps.neighborhood.urls", "neighborhoods"), namespace="neighborhoods")),
+    path("api/v1/", include(("apps.passes.urls", "passes"), namespace="passes")),
     path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="openapiurl"),
 ]
