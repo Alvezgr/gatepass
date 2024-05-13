@@ -9,6 +9,8 @@ Proporciona una API REST que permite realizar operaciones CRUD (crear, leer, act
 - Registro de diferentes tipos de vehículos, a través del model `VehicleKind` como autos, motocicletas, bicicletas, camionetas, yates, veleros, etc.
 - Los datos requeridos para cada vehículo a través del model `Vehicle` incluyen tipo, marca, modelo, color, patente, nombre de la aseguradora y fecha de vencimiento de la póliza del seguro.
 - Permite sumarizar los vehículos por algún atributo como ser: Color, modelo, marca, etc...
+- Permite crear pases de vehículos a traves del model `Pass`
+- Emite alertas según el tipo de acción o si la póliza del vehículo expiró.
 
 ## Endpoints
 
