@@ -103,7 +103,7 @@ class Migration(migrations.Migration):
                     models.CharField(
                         choices=[
                             ("outside", "Ya salio"),
-                            ("inside", "Ya entro "),
+                            ("inside", "Ya entro"),
                             ("insurance", "Poliza expirada"),
                         ],
                         help_text="Se alerta si el vehículo ya esta adentro o ya salio.",

@@ -32,7 +32,7 @@ class Alert(GPBaseModel):
     """
     ACTIONS_ALERT = (
         ('outside', 'Ya salio'),
-        ('inside', 'Ya entro '),
+        ('inside', 'Ya entro'),
         ('insurance', 'Poliza expirada')
     )
     gate = models.ForeignKey(Gate, on_delete=models.CASCADE)
