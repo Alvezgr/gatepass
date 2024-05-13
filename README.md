@@ -1,14 +1,14 @@
 # GatePass API
 
 Esta es una aplicación diseñada para gestionar vecindarios, puertas de accesos y vehículos que ingresan o egresan de una urbanización privada. 
-Proporciona una API REST que permite realizar operaciones CRUD (crear, leer, actualizar, eliminar) sobre los vehículos registrados, vecindarios y puertas de acceso de vecindarios.
+Proporciona una API REST que permite realizar operaciones CRUD (crear, leer, actualizar, eliminar) sobre los vehículos registrados, vecindarios y puertas de acceso de vecindarios. Permite crear pases y alertas sobre pólizas vencidas o vehículos que ya ingresaron o egresaron intentando repetir la misma acción.
 
 ## Características
 
 - Registro de urbanizaciones privadas a través del model `Neighborhood`y puertas de accesos a través del model `Gates`
 - Registro de diferentes tipos de vehículos, a través del model `VehicleKind` como autos, motocicletas, bicicletas, camionetas, yates, veleros, etc.
 - Los datos requeridos para cada vehículo a través del model `Vehicle` incluyen tipo, marca, modelo, color, patente, nombre de la aseguradora y fecha de vencimiento de la póliza del seguro.
-- Permite sumarizar los vehiculos por algun atributo como ser: Color, modelo, marca, etc...
+- Permite sumarizar los vehículos por algún atributo como ser: Color, modelo, marca, etc...
 
 ## Endpoints
 
@@ -39,7 +39,6 @@ Proporciona una API REST que permite realizar operaciones CRUD (crear, leer, act
 
 - **DELETE /neighborhoods/{id}**: Elimina un vehículo de la base de datos según su ID.
 
-
 **Puertas de accesos**
 
 - **GET /gates**: Obtiene la lista de todos las puertas de accesos.
@@ -55,7 +54,6 @@ Proporciona una API REST que permite realizar operaciones CRUD (crear, leer, act
 **Vehículos**
 
 - **GET /vehicles**: Obtiene la lista de todos los vehículos registrados.
-
 - **GET /vehicles/{id}**: Obtiene los detalles de un vehículo específico según su ID.
 
 - **GET /vehicles/summarize**: Permite contar vehículos por un determinado atributo.
@@ -66,7 +64,22 @@ Proporciona una API REST que permite realizar operaciones CRUD (crear, leer, act
 
 - **DELETE /vehicles/{id}**: Elimina un vehículo de la base de datos según su ID.
 
-  
+**Passes**
+
+- **GET /passes**: Obtiene la lista de todos los pases registrados.
+- **GET /passes/{id}**: Obtiene los detalles de un pase específico según su ID.
+
+- **POST /passes**: Crea un nuevo pase con la información proporcionada en el cuerpo de la solicitud.
+
+- **PUT /passes/{id}**: Actualiza la información de un pase existente identificado por su ID.
+
+- **DELETE /passes/{id}**: Elimina un pase de la base de datos según su ID.
+
+**Alertas**
+
+- **GET /alerts**: Obtiene la lista de todos las alertas registradas.
+- **GET /alerts/{id}**: Obtiene los detalles de una alerta específica según su ID.
+
 
 ## Formato de Datos
 
