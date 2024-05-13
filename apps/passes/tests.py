@@ -1,5 +1,8 @@
 """Module for brand testing."""
 
+# Utils imports
+import datetime
+
 # Django
 from django.urls import reverse
 
@@ -36,8 +39,9 @@ class PassTests(APITestCase):
             model="2013",
             license_plate="ADD 1233B",
             insurer="libre",
-            insurance_expiration="2025-03-02",
+            insurance_expiration="2028-03-02",
         )
+        
         self.neighborhood = Neighborhood.objects.create(
             name="La emilia",
             address="Road 12",
@@ -101,12 +105,44 @@ class PassTests(APITestCase):
         self.client.force_authenticate(user=self.user)
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        __import__('pdb').set_trace()
         self.assertIn(
-            response.data["warning"][0],
+            response.data[0],
             [
                 "Se creo una alerta, el vehiculo ya salio.",
                 "Se creo una alerta, el vehiculo ya entro.",
             ],
+        )
+
+    def test_pass_generate_insurance_alert(self):
+        """
+        Ensure a vehicle with a insurance expired created an alert.
+        """
+
+        yesterday = datetime.date.today() - datetime.timedelta(days=1)
+        vehicle_insurance_expired = Vehicle.objects.create(
+            kind=self.vehicle_kind,
+            brand="Ford",
+            color="red",
+            model="2013",
+            license_plate="RRR 1233B",
+            insurer="libre",
+            insurance_expiration=yesterday,
+        )
+        url = reverse("passes:passes-list")
+
+        data = {
+            "gate": self.gate.pk,
+            "vehicle": vehicle_insurance_expired.pk,
+            "action": "ingress"
+        }
+
+        self.client.force_authenticate(user=self.user)
+        response = self.client.post(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn(
+            response.data[0],
+            "Se creo una alerta, el vehiculo tiene la poliza vencida.",
         )
 
     def test_create_pass(self):
@@ -124,7 +160,7 @@ class PassTests(APITestCase):
         self.client.force_authenticate(user=self.user)
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data["name"], data["name"])
+        self.assertEqual(response.data["action"], data["action"])
 
     def test_update_pass(self):
         """
@@ -138,7 +174,7 @@ class PassTests(APITestCase):
         response = self.client.patch(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data["action"], data["egress"]
+            response.data["action"], data["action"]
         )
 
     def test_list_passes(self):
@@ -211,7 +247,7 @@ class AlertTests(APITestCase):
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            response.data["error"][0],
+            response.data[0],
             "No se puede crear una alerta, las alertas son automaticas.",
         )
 
